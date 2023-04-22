@@ -1,0 +1,21 @@
+{
+  "name": "mathsbot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Greensky <david.hesliere@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "amethystjs": "^1.4.1",
+    "discord.js": "^14.9.0",
+    "dotenv": "^16.0.3",
+    "tsc": "^2.0.4",
+    "typescript": "^5.0.4"
+  },
+  "devDependencies": {
+    "prettier": "^2.8.7"
+  },
+  "scripts": {
+    "build": "yarn tsc -b",
+    "start": "node dist/index.js"
+  }
+}
