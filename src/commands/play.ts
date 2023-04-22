@@ -10,6 +10,7 @@ import {
 import { CalcType, DotLength, NumberLength, NumbersType } from '../typings/calculType';
 import { generateCalcul, generateNumbers } from '../utils/toolbox';
 import calculs from '../maps/calculs';
+import database from '../maps/database';
 
 export default new AmethystCommand({
     name: 'lancer',
@@ -126,6 +127,7 @@ export default new AmethystCommand({
     const zero = !!options.getBoolean('zéro');
 
     const numbers = generateNumbers({ dotLength, numberLength: numbersLength, numberType: numbersType, hasZero: zero });
+    database.addStart(interaction.user.id);
 
     const calcul = generateCalcul({ numbers, operation });
     const msg = (await interaction

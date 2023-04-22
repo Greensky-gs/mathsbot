@@ -3,6 +3,7 @@ import calculs from '../maps/calculs';
 import { EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
 import { ActionRowBuilder } from '@discordjs/builders';
 import { secondsToWeeks } from '../utils/toolbox';
+import database from '../maps/database';
 
 export default new ButtonHandler({
     customId: 'solve'
@@ -70,6 +71,7 @@ export default new ButtonHandler({
     calculs.delete(message.id);
 
     if (response === solution) {
+        database.addWin(user.id)
         message
             .edit({
                 embeds: [
@@ -91,6 +93,7 @@ export default new ButtonHandler({
             })
             .catch(log4js.trace);
     } else {
+        database.addLoose(user.id);
         message
             .edit({
                 embeds: [

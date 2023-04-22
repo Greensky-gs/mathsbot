@@ -8,6 +8,8 @@
     "amethystjs": "^1.4.1",
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
+    "dsc-pagination": "^1.0.3",
+    "fs": "^0.0.1-security",
     "tsc": "^2.0.4",
     "typescript": "^5.0.4"
   },
