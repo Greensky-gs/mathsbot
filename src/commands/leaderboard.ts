@@ -43,7 +43,8 @@ export default new AmethystCommand({
             numeriseLocale: 'fr',
             user: interaction.user,
             interaction,
-            invalidPageContent: (max) => ({ ephemeral: true, content: `Veuillez choisir un nombre entre **1** et **${max}**`  })
+            invalidPageContent: (max) => ({ ephemeral: true, content: `Veuillez choisir un nombre entre **1** et **${max}**`  }),
+            displayPages: 'footer'
         })
     }
 })
