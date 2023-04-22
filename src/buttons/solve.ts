@@ -71,7 +71,7 @@ export default new ButtonHandler({
     calculs.delete(message.id);
 
     if (response === solution) {
-        database.addWin(user.id)
+        database.addWin(user.id);
         message
             .edit({
                 embeds: [
