@@ -1,16 +1,23 @@
-import { AmethystCommand, log4js } from "amethystjs";
-import { ActionRowBuilder, ApplicationCommandOptionType, ButtonBuilder, ButtonStyle, EmbedBuilder, Message } from "discord.js";
-import { CalcType, DotLength, NumberLength, NumbersType } from "../typings/calculType";
-import { generateCalcul, generateNumbers } from "../utils/toolbox";
-import calculs from "../maps/calculs";
+import { AmethystCommand, log4js } from 'amethystjs';
+import {
+    ActionRowBuilder,
+    ApplicationCommandOptionType,
+    ButtonBuilder,
+    ButtonStyle,
+    EmbedBuilder,
+    Message
+} from 'discord.js';
+import { CalcType, DotLength, NumberLength, NumbersType } from '../typings/calculType';
+import { generateCalcul, generateNumbers } from '../utils/toolbox';
+import calculs from '../maps/calculs';
 
 export default new AmethystCommand({
     name: 'lancer',
-    description: "Créer un calcul que vous devez résoudre",
+    description: 'Créer un calcul que vous devez résoudre',
     options: [
         {
             name: 'nombres',
-            description: "Type de nombres",
+            description: 'Type de nombres',
             type: ApplicationCommandOptionType.String,
             required: false,
             choices: [
@@ -19,14 +26,14 @@ export default new AmethystCommand({
                     value: NumbersType.Digit
                 },
                 {
-                    name: "Entiers",
+                    name: 'Entiers',
                     value: NumbersType.Integer
                 }
             ]
         },
         {
-            name: "virgules",
-            description: "Nombres derrière les virgules",
+            name: 'virgules',
+            description: 'Nombres derrière les virgules',
             type: ApplicationCommandOptionType.String,
             required: false,
             choices: [
@@ -54,7 +61,7 @@ export default new AmethystCommand({
         },
         {
             name: 'longueur',
-            description: "Longueur des nombres",
+            description: 'Longueur des nombres',
             type: ApplicationCommandOptionType.String,
             required: false,
             choices: [
@@ -82,7 +89,7 @@ export default new AmethystCommand({
         },
         {
             name: 'calcul',
-            description: "Type de calcul",
+            description: 'Type de calcul',
             type: ApplicationCommandOptionType.String,
             required: false,
             choices: [
@@ -106,45 +113,50 @@ export default new AmethystCommand({
         },
         {
             name: 'zéro',
-            description: "Inclut le zéro dans les calculs",
+            description: 'Inclut le zéro dans les calculs',
             required: false,
             type: ApplicationCommandOptionType.Boolean
         }
     ]
-}).setChatInputRun(async({ interaction, options }) => {
-    const numbersType = options.getString('nombres') as NumbersType ?? NumbersType.Digit;
-    const dotLength = options.getString('virgules') as DotLength ?? DotLength.TwoOne;
-    const numbersLength = options.getString('longueur') as NumberLength ?? NumberLength.ThreeTwo;
-    const operation = options.getString('calcul') as CalcType ?? CalcType.Multiplication;
-    const zero = !!options.getBoolean('zéro')
+}).setChatInputRun(async ({ interaction, options }) => {
+    const numbersType = (options.getString('nombres') as NumbersType) ?? NumbersType.Digit;
+    const dotLength = (options.getString('virgules') as DotLength) ?? DotLength.TwoOne;
+    const numbersLength = (options.getString('longueur') as NumberLength) ?? NumberLength.ThreeTwo;
+    const operation = (options.getString('calcul') as CalcType) ?? CalcType.Multiplication;
+    const zero = !!options.getBoolean('zéro');
 
     const numbers = generateNumbers({ dotLength, numberLength: numbersLength, numberType: numbersType, hasZero: zero });
 
     const calcul = generateCalcul({ numbers, operation });
-    const msg = await interaction.reply({
-        embeds: [ new EmbedBuilder()
-            .setTitle("Calcul")
-            .setDescription(`Un nouveau calcul a spawn ! Appuyez sur le bouton pour le résoudre\n\`\`\`${calcul.calcul}\`\`\``)
-            .setColor('Orange')
-            .setTimestamp()
-            .setFooter({ text: interaction.user.username, iconURL: interaction.user.displayAvatarURL({ forceStatic: false }) })
-        ],
-        components: [
-            new ActionRowBuilder<ButtonBuilder>()
-                .setComponents(new ButtonBuilder()
-                    .setLabel('Résoudre')
-                    .setCustomId('solve')
-                    .setStyle(ButtonStyle.Secondary)
+    const msg = (await interaction
+        .reply({
+            embeds: [
+                new EmbedBuilder()
+                    .setTitle('Calcul')
+                    .setDescription(
+                        `Un nouveau calcul a spawn ! Appuyez sur le bouton pour le résoudre\n\`\`\`${calcul.calcul}\`\`\``
+                    )
+                    .setColor('Orange')
+                    .setTimestamp()
+                    .setFooter({
+                        text: interaction.user.username,
+                        iconURL: interaction.user.displayAvatarURL({ forceStatic: false })
+                    })
+            ],
+            components: [
+                new ActionRowBuilder<ButtonBuilder>().setComponents(
+                    new ButtonBuilder().setLabel('Résoudre').setCustomId('solve').setStyle(ButtonStyle.Secondary)
                 )
-        ],
-        fetchReply: true
-    }).catch(log4js.trace) as Message<true>;
+            ],
+            fetchReply: true
+        })
+        .catch(log4js.trace)) as Message<true>;
 
-    if (!msg) return log4js.trace(`Le message n'a pas pu être envoyé`)
+    if (!msg) return log4js.trace(`Le message n'a pas pu être envoyé`);
 
     calculs.set(msg.id, {
         userId: interaction.user.id,
         calculation: calcul.calcul,
         start: Date.now()
     });
-})
+});
