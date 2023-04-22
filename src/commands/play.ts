@@ -144,6 +144,7 @@ export default new AmethystCommand({
 
     calculs.set(msg.id, {
         userId: interaction.user.id,
-        calculation: calcul.calcul
+        calculation: calcul.calcul,
+        start: Date.now()
     });
 })

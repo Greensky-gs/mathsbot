@@ -1,1 +1,1 @@
-export default new Map<string, { userId: string; calculation: string; }>();
+export default new Map<string, { userId: string; calculation: string; start: number; }>();

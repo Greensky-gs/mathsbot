@@ -2,6 +2,7 @@ import { ButtonHandler, log4js } from "amethystjs";
 import calculs from "../maps/calculs";
 import { EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from "discord.js";
 import { ActionRowBuilder } from "@discordjs/builders";
+import { secondsToWeeks } from "../utils/toolbox";
 
 export default new ButtonHandler({
     customId: 'solve'
@@ -55,6 +56,9 @@ export default new ButtonHandler({
     const response = parseFloat(reply.fields.getTextInputValue('reply'))
     const solution = eval(calcul.calculation);
 
+    const time = Math.floor((Date.now() - calcul.start) / 1000)
+    calculs.delete(message.id);
+
     if (response === solution) {
         message.edit({
             embeds: [
@@ -64,6 +68,11 @@ export default new ButtonHandler({
                     .setColor('#00ee00')
                     .setTimestamp()
                     .setFooter({ text: user.username, iconURL: user.displayAvatarURL({ forceStatic: false }) })
+                    .setFields({
+                        name: 'Temps',
+                        value: secondsToWeeks(time),
+                        inline: false
+                    })
             ],
             components: []
         }).catch(log4js.trace)
@@ -76,6 +85,11 @@ export default new ButtonHandler({
                     .setColor('#ff0000')
                     .setTimestamp()
                     .setFooter({ text: user.username, iconURL: user.displayAvatarURL({ forceStatic: false }) })
+                    .setFields({
+                        name: 'Temps',
+                        value: secondsToWeeks(time),
+                        inline: false
+                    })
             ],
             components: []
         }).catch(log4js.trace)
