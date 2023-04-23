@@ -17,7 +17,7 @@ export class Database {
     public addPoints(userId: string, points: number) {
         if (!this._cache[userId]) this.createFor(userId);
 
-        this._cache[userId]+=Math.abs(points);
+        this._cache[userId] += Math.abs(points);
         this.save();
         return this;
     }

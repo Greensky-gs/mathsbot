@@ -127,7 +127,7 @@ export default new AmethystCommand({
     const zero = !!options.getBoolean('zéro');
 
     const numbers = generateNumbers({ dotLength, numberLength: numbersLength, numberType: numbersType, hasZero: zero });
-    
+
     const calcul = generateCalcul({ numbers, operation });
     const msg = (await interaction
         .reply({
