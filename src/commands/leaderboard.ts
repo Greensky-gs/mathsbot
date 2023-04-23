@@ -10,8 +10,9 @@ export default new AmethystCommand({
     const leaderboard = database.leaderboard;
 
     const add = (embed: EmbedBuilder, el: (typeof leaderboard)[0], index: number) => {
+        const pos = ['👑', '🥈', '🥉'][index - 1] ?? `${index.toLocaleString()}.`
         embed.setDescription(
-            `${embed.data.description}\n${index.toLocaleString()}. <@${
+            `${embed.data.description}\n${pos} <@${
                 el.userId
             }> : ${el.points.toLocaleString()} points`
         );
