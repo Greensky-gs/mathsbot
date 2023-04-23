@@ -172,7 +172,7 @@ export const calculatePoints = ({
         points += array.find((x) => x.x === value).y;
     };
 
-    add('dot', details.dotLength);
+    if (details.numberType === NumbersType.Digit) add('dot', details.dotLength);
     add('integer', details.numberType);
     add('length', details.numbersLength);
     add('type', details.type);
