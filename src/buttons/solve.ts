@@ -2,7 +2,7 @@ import { ButtonHandler, log4js } from 'amethystjs';
 import calculs from '../maps/calculs';
 import { EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
 import { ActionRowBuilder } from '@discordjs/builders';
-import { secondsToWeeks } from '../utils/toolbox';
+import { calculatePoints, secondsToWeeks } from '../utils/toolbox';
 import database from '../maps/database';
 
 export default new ButtonHandler({
@@ -64,14 +64,21 @@ export default new ButtonHandler({
     if (!reply) return;
 
     reply.deferUpdate();
-    const response = parseFloat(reply.fields.getTextInputValue('reply'));
+    const response = parseFloat(reply.fields.getTextInputValue('reply').replace(/,/g, '.'));
     const solution = eval(calcul.calculation);
 
     const time = Math.floor((Date.now() - calcul.start) / 1000);
+    const points = calculatePoints({
+        details: calcul.details,
+        answer: response,
+        solution,
+        time,
+        right: response === solution
+    });
     calculs.delete(message.id);
+    database.addPoints(user.id, points);
 
     if (response === solution) {
-        database.addWin(user.id);
         message
             .edit({
                 embeds: [
@@ -93,7 +100,6 @@ export default new ButtonHandler({
             })
             .catch(log4js.trace);
     } else {
-        database.addLoose(user.id);
         message
             .edit({
                 embeds: [

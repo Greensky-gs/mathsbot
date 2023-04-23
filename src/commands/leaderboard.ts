@@ -12,9 +12,8 @@ export default new AmethystCommand({
     const add = (embed: EmbedBuilder, el: (typeof leaderboard)[0], index: number) => {
         embed.setDescription(
             `${embed.data.description}\n${index.toLocaleString()}. <@${el.userId}> : ${(
-                (el.succeeded / el.played) *
-                100
-            ).toFixed(0)}%`
+                el.points
+            ).toLocaleString()} points`
         );
     };
     const embed = () => {

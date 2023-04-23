@@ -127,8 +127,7 @@ export default new AmethystCommand({
     const zero = !!options.getBoolean('zéro');
 
     const numbers = generateNumbers({ dotLength, numberLength: numbersLength, numberType: numbersType, hasZero: zero });
-    database.addStart(interaction.user.id);
-
+    
     const calcul = generateCalcul({ numbers, operation });
     const msg = (await interaction
         .reply({
@@ -159,6 +158,12 @@ export default new AmethystCommand({
     calculs.set(msg.id, {
         userId: interaction.user.id,
         calculation: calcul.calcul,
-        start: Date.now()
+        start: Date.now(),
+        details: {
+            numbersLength,
+            dotLength,
+            type: operation,
+            numberType: numbersType
+        }
     });
 });
