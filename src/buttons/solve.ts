@@ -93,7 +93,11 @@ export default new ButtonHandler({
                         .setFields({
                             name: 'Temps',
                             value: secondsToWeeks(time),
-                            inline: false
+                            inline: true
+                        }, {
+                            name: 'Points',
+                            value: `${points.toLocaleString('fr')} points`,
+                            inline: true
                         })
                 ],
                 components: []
@@ -112,7 +116,11 @@ export default new ButtonHandler({
                         .setFields({
                             name: 'Temps',
                             value: secondsToWeeks(time),
-                            inline: false
+                            inline: true
+                        }, {
+                            name: 'Points',
+                            value: `${points.toLocaleString('fr')} points`,
+                            inline: true
                         })
                 ],
                 components: []
