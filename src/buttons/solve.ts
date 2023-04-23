@@ -83,7 +83,7 @@ export default new ButtonHandler({
             .edit({
                 embeds: [
                     new EmbedBuilder()
-                        .setTitle('Calcul réussit')
+                        .setTitle('Calcul réussi')
                         .setDescription(
                             `Vous avez correctement réussi le calcul !\n\`\`\`${calcul.calculation} = ${solution}\`\`\``
                         )
