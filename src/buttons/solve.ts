@@ -90,15 +90,18 @@ export default new ButtonHandler({
                         .setColor('#00ee00')
                         .setTimestamp()
                         .setFooter({ text: user.username, iconURL: user.displayAvatarURL({ forceStatic: false }) })
-                        .setFields({
-                            name: 'Temps',
-                            value: secondsToWeeks(time),
-                            inline: true
-                        }, {
-                            name: 'Points',
-                            value: `${points.toLocaleString('fr')} points`,
-                            inline: true
-                        })
+                        .setFields(
+                            {
+                                name: 'Temps',
+                                value: secondsToWeeks(time),
+                                inline: true
+                            },
+                            {
+                                name: 'Points',
+                                value: `${points.toLocaleString('fr')} points`,
+                                inline: true
+                            }
+                        )
                 ],
                 components: []
             })
@@ -113,15 +116,18 @@ export default new ButtonHandler({
                         .setColor('#ff0000')
                         .setTimestamp()
                         .setFooter({ text: user.username, iconURL: user.displayAvatarURL({ forceStatic: false }) })
-                        .setFields({
-                            name: 'Temps',
-                            value: secondsToWeeks(time),
-                            inline: true
-                        }, {
-                            name: 'Points',
-                            value: `${points.toLocaleString('fr')} points`,
-                            inline: true
-                        })
+                        .setFields(
+                            {
+                                name: 'Temps',
+                                value: secondsToWeeks(time),
+                                inline: true
+                            },
+                            {
+                                name: 'Points',
+                                value: `${points.toLocaleString('fr')} points`,
+                                inline: true
+                            }
+                        )
                 ],
                 components: []
             })
