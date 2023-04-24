@@ -1,5 +1,6 @@
 import { AmethystClient } from 'amethystjs';
 import { config } from 'dotenv';
+import { Sprints } from './utils/Sprint';
 
 config();
 
@@ -17,3 +18,11 @@ const client = new AmethystClient(
 );
 
 client.start({});
+
+client.sprints = new Sprints(client);
+
+declare module 'discord.js' {
+    interface Client {
+        sprints: Sprints;
+    }
+}

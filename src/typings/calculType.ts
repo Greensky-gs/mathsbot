@@ -23,3 +23,10 @@ export enum CalcType {
     Addition = 'Addition',
     Soustraction = 'Soustraction'
 }
+export type calculDetails = {
+    type: CalcType;
+    dotLength: DotLength;
+    numbersLength: NumberLength;
+    numbersType: NumbersType;
+    hasZero: boolean;
+}
