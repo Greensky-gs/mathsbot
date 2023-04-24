@@ -17,12 +17,12 @@ export default new AmethystCommand({
     options: [
         {
             name: 'temps',
-            description: "Temps du sprint",
+            description: 'Temps du sprint',
             type: ApplicationCommandOptionType.Integer,
             required: false,
             choices: [
                 {
-                    name: "1 minute",
+                    name: '1 minute',
                     value: 60000
                 },
                 {
@@ -139,10 +139,13 @@ export default new AmethystCommand({
         }
     ]
 }).setChatInputRun(async ({ interaction, options }) => {
-    if (interaction.client.sprints.alreadyStarted(interaction.user.id)) return interaction.reply({
-        ephemeral: true,
-        content: "Vous avez déjà commencé un sprint"
-    }).catch(log4js.trace);
+    if (interaction.client.sprints.alreadyStarted(interaction.user.id))
+        return interaction
+            .reply({
+                ephemeral: true,
+                content: 'Vous avez déjà commencé un sprint'
+            })
+            .catch(log4js.trace);
 
     const numbersType = (options.getString('nombres') as NumbersType) ?? NumbersType.Digit;
     const dotLength = (options.getString('virgules') as DotLength) ?? DotLength.TwoOne;

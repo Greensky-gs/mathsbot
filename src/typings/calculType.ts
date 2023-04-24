@@ -29,4 +29,4 @@ export type calculDetails = {
     numbersLength: NumberLength;
     numbersType: NumbersType;
     hasZero: boolean;
-}
+};
