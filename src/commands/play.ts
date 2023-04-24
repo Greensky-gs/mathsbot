@@ -10,7 +10,6 @@ import {
 import { CalcType, DotLength, NumberLength, NumbersType } from '../typings/calculType';
 import { generateCalcul, generateNumbers } from '../utils/toolbox';
 import calculs from '../maps/calculs';
-import database from '../maps/database';
 
 export default new AmethystCommand({
     name: 'lancer',
@@ -23,7 +22,7 @@ export default new AmethystCommand({
             required: false,
             choices: [
                 {
-                    name: 'Décimal',
+                    name: 'Décimaux',
                     value: NumbersType.Digit
                 },
                 {

@@ -1,15 +1,8 @@
 import { AmethystCommand, log4js } from 'amethystjs';
 import {
-    ActionRowBuilder,
-    ApplicationCommandOptionType,
-    ButtonBuilder,
-    ButtonStyle,
-    EmbedBuilder,
-    Message
+    ApplicationCommandOptionType
 } from 'discord.js';
 import { CalcType, DotLength, NumberLength, NumbersType } from '../typings/calculType';
-import { generateCalcul, generateNumbers } from '../utils/toolbox';
-import calculs from '../maps/calculs';
 
 export default new AmethystCommand({
     name: 'sprint',
@@ -42,7 +35,7 @@ export default new AmethystCommand({
             required: false,
             choices: [
                 {
-                    name: 'Décimal',
+                    name: 'Décimaux',
                     value: NumbersType.Digit
                 },
                 {
