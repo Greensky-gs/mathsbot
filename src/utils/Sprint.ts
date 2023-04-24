@@ -128,6 +128,8 @@ class Sprint {
         return msg;
     }
     private edit(guess: number) {
+        if (this.ended) return;
+
         const precedent = this.calcul;
         const right = guess === precedent.result;
 
