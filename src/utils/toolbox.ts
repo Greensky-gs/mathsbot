@@ -1,4 +1,4 @@
-import { CalcType, DotLength, NumberLength, NumbersType } from '../typings/calculType';
+import { CalcType, DotLength, NumberLength, NumbersType, calcul, calculDetails } from '../typings/calculType';
 
 export const generateNumbers = ({
     numberLength,
@@ -53,7 +53,7 @@ export const generateNumbers = ({
 
     return numbers as [number, number];
 };
-const calculateFloat = (a: number, b: number, operator: string) => {
+const calculateFloatMultiplication = (a: number, b: number, operator: string) => {
     const apower = a.toString().split('.')[1].length;
     const bpower = a.toString().split('.')[1].length;
 
@@ -62,7 +62,16 @@ const calculateFloat = (a: number, b: number, operator: string) => {
 
     return result / 10**(apower + bpower);
 }
-export const generateCalcul = ({ numbers, operation }: { operation: CalcType; numbers: [number, number] }) => {
+const calculateFloatAddition = (a: number, b: number, operator: string) => {
+    const adec = a.toString().split('.')[1];
+    const bdec = b.toString().split('.')[1];
+
+    const longest = adec.length > bdec.length ? adec.length : bdec.length;
+    const result = eval(`(${a*(10**longest)}) ${operator} (${b*(10**longest)})`)
+
+    return result / (10**longest)
+}
+export const generateCalcul = ({ numbers, operation }: { operation: CalcType; numbers: [number, number] }): calcul => {
     const method = Math.floor(Math.random() * 100) % 2 === 0 ? 'pop' : 'shift';
     const a = numbers[method]();
     const b = numbers.shift();
@@ -76,8 +85,12 @@ export const generateCalcul = ({ numbers, operation }: { operation: CalcType; nu
     const calcul = `${a} ${list.find((x) => x.x === operation).y} ${b}`;
 
     let result = 0;
-    if (numbers.some(n => n.toString().includes('.'))) {
-        result = calculateFloat(a, b, list.find(x => x.x === operation).y);
+    if ([a, b].some(n => n.toString().includes('.'))) {
+        if ([CalcType.Multiplication, CalcType.Division].includes(operation)) {
+            result = calculateFloatMultiplication(a, b, list.find(x => x.x === operation).y);
+        } else {
+            result = calculateFloatAddition(a, b, list.find(x => x.x === operation).y);
+        }
     } else {
         result = eval(calcul)
     }
