@@ -13,6 +13,7 @@ const client = new AmethystClient(
         commandsFolder: './dist/commands',
         eventsFolder: './dist/events',
         buttonsFolder: './dist/buttons',
+        autocompleteListenersFolder: './dist/autocompletes',
         debug: true
     }
 );

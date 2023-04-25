@@ -30,3 +30,7 @@ export type calculDetails = {
     numbersType: NumbersType;
     hasZero: boolean;
 };
+export type calcul = {
+    calcul: string;
+    result: number;
+}
