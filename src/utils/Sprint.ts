@@ -162,8 +162,9 @@ class Sprint {
         if (this.tries.length === 0) return 0;
 
         const decrement = loosed ? 0 : errorsCount * 5;
+        const percentIncrement = (this.time / 60000) * 2;
 
-        const percent = loosed ? 20 : 70 - decrement;
+        const percent = (loosed ? 10 : 60 - decrement) + percentIncrement;
         const points = Math.floor((this.points * percent) / 100);
 
         database.addPoints(this._user.id, points);
