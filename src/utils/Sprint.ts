@@ -206,6 +206,9 @@ class Sprint {
                 })
                 .catch(log4js.trace);
         } else {
+            if (this.gotAward()) {
+                this.handleAwards();
+            }
             this._message
                 .edit({
                     embeds: [
@@ -214,7 +217,7 @@ class Sprint {
                             .setDescription(
                                 `Vous avez correctement effectué **${this._tries
                                     .filter((x) => x)
-                                    .length.toLocaleString()} calculs**`
+                                    .length.toLocaleString()} calculs**${this.gotAward() ? `\n\nVous avez obtenu un record ! Utilisez la commande \`/record\` pour le voir`: ''}`
                             )
                             .setFields(
                                 {
@@ -238,20 +241,39 @@ class Sprint {
                     components: []
                 })
                 .catch(log4js.trace);
-            
-            if (this._tries.filter(x => !x).length === 0) {
-                const operation = [{ x: CalcType.Addition, y: 'addition' }, { x: CalcType.Division, y: 'division' }, { x: CalcType.Multiplication, y: 'multiplication' }, { x: CalcType.Soustraction, y: 'soustraction' }].find(x => x.x === this._details.type).y as awardType;
+        }
+    }
+    private gotAward() {
+        if (this._tries.filter(x => !x).length === 0) {
+            const operation = [{ x: CalcType.Addition, y: 'addition' }, { x: CalcType.Division, y: 'division' }, { x: CalcType.Multiplication, y: 'multiplication' }, { x: CalcType.Soustraction, y: 'soustraction' }].find(x => x.x === this._details.type).y as awardType;
 
-                const award = database.getAward(operation);
-                if (!award) {
-                    database.setAward(operation, this.user.id, this.time / 1000, this.tries.length);
-                } else {
-                    const ratio = award.amount / award.seconds;
-                    const userRatio = this._tries.length / this.time / 1000;
+            const award = database.getAward(operation);
+            if (!award) {
+                return true;
+            } else {
+                const ratio = award.amount / award.seconds;
+                const userRatio = this._tries.length / this.time / 1000;
 
-                    if (ratio < userRatio) {
-                        database.setAward(operation, this.user.id, this.time / 1000, this._tries.length);
-                    }
+                if (ratio < userRatio) {
+                    return true
+                }
+            }
+        }
+        return false;
+    }
+    private handleAwards() {
+        if (this._tries.filter(x => !x).length === 0) {
+            const operation = [{ x: CalcType.Addition, y: 'addition' }, { x: CalcType.Division, y: 'division' }, { x: CalcType.Multiplication, y: 'multiplication' }, { x: CalcType.Soustraction, y: 'soustraction' }].find(x => x.x === this._details.type).y as awardType;
+
+            const award = database.getAward(operation);
+            if (!award) {
+                database.setAward(operation, this.user.id, this.time / 1000, this.tries.length);
+            } else {
+                const ratio = award.amount / award.seconds;
+                const userRatio = this._tries.length / this.time / 1000;
+
+                if (ratio < userRatio) {
+                    database.setAward(operation, this.user.id, this.time / 1000, this._tries.length);
                 }
             }
         }
