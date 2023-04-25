@@ -234,6 +234,7 @@ export class Battle {
             }
 
             const answer = parseFloat(reply.fields.getTextInputValue('answer').replace(/ +/g, '').replace(/,/g, '.'));
+            if (!answer) return;
 
             const diff = this.differenceWithStart;
             this.clocks[this.turn % 2] -= diff;
