@@ -33,6 +33,7 @@ export class Battle {
     private points: [number, number] = [0, 0];
     private pointsWinned: number;
     private timeout: NodeJS.Timeout;
+    private message: Message<true>;
 
     public get ended() {
         return this._ended;
@@ -61,6 +62,13 @@ export class Battle {
         this.start();
     }
 
+    private async fetchMessage() {
+        const reply = await this.interaction.fetchReply().catch(log4js.trace) as Message<true>;
+        if (!reply) return;
+
+        this.message = reply;
+        return reply;
+    }
     private edit(content: InteractionReplyOptions & { fetchReply?: boolean }) {
         const method = this.interaction.deferred || this.interaction.replied ? 'editReply' : 'reply';
         return this.interaction[method](content);
@@ -166,6 +174,7 @@ export class Battle {
     }
     private onSolve() {
         this.interaction.client.on('buttonInteraction', async (button) => {
+            if (button.message.id !== this.message.id) return;
             if (!['battle-solve', 'resign'].includes(button.customId)) return;
 
             if (!this.users.map((x) => x.id).includes(button.user.id)) {
@@ -360,6 +369,7 @@ export class Battle {
     }
     private start() {
         this.generateCalcul();
+        this.fetchMessage();
         this.onSolve();
 
         this.timeout = setTimeout(() => {
