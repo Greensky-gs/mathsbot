@@ -186,7 +186,9 @@ class Sprint {
                             .setDescription(
                                 `Vous avez correctement effectué **${this._tries
                                     .filter((x) => x)
-                                    .length.toLocaleString()} calculs** ( ${this._tries.filter(x => !x).length} faux )`
+                                    .length.toLocaleString()} calculs** ( ${
+                                    this._tries.filter((x) => !x).length
+                                } faux )`
                             )
                             .setFields(
                                 {
@@ -218,7 +220,11 @@ class Sprint {
                             .setDescription(
                                 `Vous avez correctement effectué **${this._tries
                                     .filter((x) => x)
-                                    .length.toLocaleString()} calculs**${this.gotAward() ? `\n\nVous avez obtenu un record ! Utilisez la commande \`/record\` pour le voir`: ''}`
+                                    .length.toLocaleString()} calculs**${
+                                    this.gotAward()
+                                        ? `\n\nVous avez obtenu un record ! Utilisez la commande \`/record\` pour le voir`
+                                        : ''
+                                }`
                             )
                             .setFields(
                                 {
@@ -245,8 +251,13 @@ class Sprint {
         }
     }
     private gotAward() {
-        if (this._tries.filter(x => !x).length === 0) {
-            const operation = [{ x: CalcType.Addition, y: 'addition' }, { x: CalcType.Division, y: 'division' }, { x: CalcType.Multiplication, y: 'multiplication' }, { x: CalcType.Soustraction, y: 'soustraction' }].find(x => x.x === this._details.type).y as awardType;
+        if (this._tries.filter((x) => !x).length === 0) {
+            const operation = [
+                { x: CalcType.Addition, y: 'addition' },
+                { x: CalcType.Division, y: 'division' },
+                { x: CalcType.Multiplication, y: 'multiplication' },
+                { x: CalcType.Soustraction, y: 'soustraction' }
+            ].find((x) => x.x === this._details.type).y as awardType;
 
             const award = database.getAward(operation);
             if (!award) {
@@ -256,15 +267,20 @@ class Sprint {
                 const userRatio = this._tries.length / this.time / 1000;
 
                 if (ratio < userRatio) {
-                    return true
+                    return true;
                 }
             }
         }
         return false;
     }
     private handleAwards() {
-        if (this._tries.filter(x => !x).length === 0) {
-            const operation = [{ x: CalcType.Addition, y: 'addition' }, { x: CalcType.Division, y: 'division' }, { x: CalcType.Multiplication, y: 'multiplication' }, { x: CalcType.Soustraction, y: 'soustraction' }].find(x => x.x === this._details.type).y as awardType;
+        if (this._tries.filter((x) => !x).length === 0) {
+            const operation = [
+                { x: CalcType.Addition, y: 'addition' },
+                { x: CalcType.Division, y: 'division' },
+                { x: CalcType.Multiplication, y: 'multiplication' },
+                { x: CalcType.Soustraction, y: 'soustraction' }
+            ].find((x) => x.x === this._details.type).y as awardType;
 
             const award = database.getAward(operation);
             if (!award) {

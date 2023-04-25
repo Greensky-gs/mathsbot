@@ -57,20 +57,20 @@ const calculateFloatMultiplication = (a: number, b: number, operator: string) =>
     const apower = a.toString().split('.')[1].length;
     const bpower = a.toString().split('.')[1].length;
 
-    const calcul = `${a*(10**apower)} ${operator} ${b*(10**bpower)}`;
+    const calcul = `${a * 10 ** apower} ${operator} ${b * 10 ** bpower}`;
     const result = eval(calcul) as number;
 
-    return result / 10**(apower + bpower);
-}
+    return result / 10 ** (apower + bpower);
+};
 const calculateFloatAddition = (a: number, b: number, operator: string) => {
     const adec = a.toString().split('.')[1];
     const bdec = b.toString().split('.')[1];
 
     const longest = adec.length > bdec.length ? adec.length : bdec.length;
-    const result = eval(`(${a*(10**longest)}) ${operator} (${b*(10**longest)})`)
+    const result = eval(`(${a * 10 ** longest}) ${operator} (${b * 10 ** longest})`);
 
-    return result / (10**longest)
-}
+    return result / 10 ** longest;
+};
 export const generateCalcul = ({ numbers, operation }: { operation: CalcType; numbers: [number, number] }): calcul => {
     const method = Math.floor(Math.random() * 100) % 2 === 0 ? 'pop' : 'shift';
     const a = numbers[method]();
@@ -85,14 +85,14 @@ export const generateCalcul = ({ numbers, operation }: { operation: CalcType; nu
     const calcul = `${a} ${list.find((x) => x.x === operation).y} ${b}`;
 
     let result = 0;
-    if ([a, b].some(n => n.toString().includes('.'))) {
+    if ([a, b].some((n) => n.toString().includes('.'))) {
         if ([CalcType.Multiplication, CalcType.Division].includes(operation)) {
-            result = calculateFloatMultiplication(a, b, list.find(x => x.x === operation).y);
+            result = calculateFloatMultiplication(a, b, list.find((x) => x.x === operation).y);
         } else {
-            result = calculateFloatAddition(a, b, list.find(x => x.x === operation).y);
+            result = calculateFloatAddition(a, b, list.find((x) => x.x === operation).y);
         }
     } else {
-        result = eval(calcul)
+        result = eval(calcul);
     }
 
     return {

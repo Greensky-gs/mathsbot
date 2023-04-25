@@ -1,7 +1,5 @@
 import { AmethystCommand, log4js } from 'amethystjs';
-import {
-    ApplicationCommandOptionType
-} from 'discord.js';
+import { ApplicationCommandOptionType } from 'discord.js';
 import { CalcType, DotLength, NumberLength, NumbersType } from '../typings/calculType';
 
 export default new AmethystCommand({

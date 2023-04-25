@@ -56,12 +56,15 @@ export class Database {
             writeFileSync('./dist/utils/database.json', JSON.stringify({}));
         }
         if (!existsSync('./dist/utils/awards.json')) {
-            writeFileSync('./dist/utils/awards.json', JSON.stringify({
-                addition: null,
-                soustraction: null,
-                multiplication: null,
-                division: null
-            }))
+            writeFileSync(
+                './dist/utils/awards.json',
+                JSON.stringify({
+                    addition: null,
+                    soustraction: null,
+                    multiplication: null,
+                    division: null
+                })
+            );
         }
 
         this._cache = JSON.parse(readFileSync('./dist/utils/database.json').toString());

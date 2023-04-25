@@ -33,4 +33,4 @@ export type calculDetails = {
 export type calcul = {
     calcul: string;
     result: number;
-}
+};

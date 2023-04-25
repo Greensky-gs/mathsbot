@@ -9,11 +9,11 @@ export default new AmethystEvent('ready', (client) => {
 
     process.on('unhandledRejection', (reason) => {
         log4js.trace(reason);
-    })
+    });
     process.on('uncaughtExceptionMonitor', (error) => {
         log4js.trace(error);
-    })
+    });
     process.on('uncaughtException', (error) => {
         log4js.trace(error);
-    })
+    });
 });
