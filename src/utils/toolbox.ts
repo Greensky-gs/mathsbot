@@ -53,6 +53,15 @@ export const generateNumbers = ({
 
     return numbers as [number, number];
 };
+const calculateFloat = (a: number, b: number, operator: string) => {
+    const apower = a.toString().split('.')[1].length;
+    const bpower = a.toString().split('.')[1].length;
+
+    const calcul = `${a*(10**apower)} ${operator} ${b*(10**bpower)}`;
+    const result = eval(calcul) as number;
+
+    return result / 10**(apower + bpower);
+}
 export const generateCalcul = ({ numbers, operation }: { operation: CalcType; numbers: [number, number] }) => {
     const method = Math.floor(Math.random() * 100) % 2 === 0 ? 'pop' : 'shift';
     const a = numbers[method]();
@@ -66,9 +75,16 @@ export const generateCalcul = ({ numbers, operation }: { operation: CalcType; nu
     ];
     const calcul = `${a} ${list.find((x) => x.x === operation).y} ${b}`;
 
+    let result = 0;
+    if (numbers.some(n => n.toString().includes('.'))) {
+        result = calculateFloat(a, b, list.find(x => x.x === operation).y);
+    } else {
+        result = eval(calcul)
+    }
+
     return {
         calcul,
-        result: eval(calcul)
+        result: result
     };
 };
 export const secondsToWeeks = (time: number) => {
