@@ -287,7 +287,7 @@ class Sprint {
                 database.setAward(operation, this.user.id, this.time / 1000, this.tries.length);
             } else {
                 const ratio = award.amount / award.seconds;
-                const userRatio = this._tries.length / this.time / 1000;
+                const userRatio = this._tries.length / (this.time / 1000);
 
                 if (ratio < userRatio) {
                     database.setAward(operation, this.user.id, this.time / 1000, this._tries.length);
